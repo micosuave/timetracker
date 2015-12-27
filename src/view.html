@@ -1,4 +1,4 @@
-<div ng-app="tasker" id="app">
+
     <div id="head">
         <div class="circles">
             <div class="progress-wrapper" ng-controller="currentPause" id="pause">
@@ -26,7 +26,7 @@
           <li class="list-animation" ng-repeat="task in tasks | filter: taskfilter track by $index"><span class="date">{{task.date}}</span> <b>{{task.note}}</b><span class="right"><span class="time">{{task.ftime}}</span><span class="pause">{{task.fpause}}</span><i class="mdi mdi-delete" ng-click="delete($index)"></i></span></li>
        </ul>
    </div>
-</div>
+
 
 <!-- Too lazy to load a new sound to dropbox... this is the dropkick sound from Chat with Chuck -->
 <audio id="alert" src="https://dl.dropboxusercontent.com/u/2449512/roundhouse.wav" preload="auto"></audio>

@@ -1,7 +1,7 @@
 (function(window, undefined) {'use strict';
 
 
-angular.module('adf.widget.timetracker', ['adf.provider'])
+angular.module('adf.widget.timetracker', ['adf.provider', 'tasker'])
   .config(["dashboardProvider", function(dashboardProvider){
     dashboardProvider
       .widget('timetracker', {
@@ -13,7 +13,7 @@ angular.module('adf.widget.timetracker', ['adf.provider'])
         }
       });
   }]);
-//localStorage.setItem('codepen-tasker',undefined);
+
 
 $('#content').slimScroll({
    position: 'right',
@@ -223,4 +223,4 @@ app.factory('timeService', [function() {
    }
 }]);
 angular.module("adf.widget.timetracker").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/timetracker/src/edit.html","<form role=form><div class=form-group><label for=sample>Sample</label> <input type=text class=form-control id=sample ng-model=config.sample placeholder=\"Enter sample\"></div></form>");
-$templateCache.put("{widgetsPath}/timetracker/src/view.html","<div ng-app=tasker id=app><div id=head><div class=circles><div class=progress-wrapper ng-controller=currentPause id=pause><div class=\"progress pause\" ng-show=\"run === false\">{{currentText}}</div><div round-progress max=max current=current color=white bgcolor=#262b34 radius=70 stroke=10 semi=false rounded=false clockwise=false responsive=false duration=2400 animation=easeInOutQuart ng-class={dimmedpause:run}></div></div><div class=progress-wrapper ng-controller=currentTask><div class=\"progress task\" ng-show=\"run === true\">{{currentText}}</div><div round-progress max=max current=current color=#00c0ff bgcolor=#262b34 radius=70 stroke=3 semi=false rounded=false clockwise=false responsive=false duration=2400 animation=easeInOutQuart ng-class={dimmedplay:!run}></div></div></div><div class=interaction ng-controller=controls><span class=btn ng-click=startpause()><i class=\"mdi mdi-pause\" ng-show=\"run === true\"></i><i class=\"mdi mdi-play\" ng-show=\"run === false\"></i></span> <span class=\"btn primary\" ng-click=addnote()><i class=\"mdi mdi-plus\"></i></span></div></div><div id=content ng-controller=tasks><div style=text-align:center ng-hide=\"tasks.length > 0\"><h2 style=\"margin:20px 0 0 0;\">Oh :(</h2><h3 style=margin:0;>You have no recorded tasks yet - that makes me sad</h3></div><input placeholder=Filter ng-show=\"tasks.length > 0\" type=text id=filter ng-model=taskfilter><ul><li class=list-animation ng-repeat=\"task in tasks | filter: taskfilter track by $index\"><span class=date>{{task.date}}</span> <b>{{task.note}}</b><span class=right><span class=time>{{task.ftime}}</span><span class=pause>{{task.fpause}}</span><i class=\"mdi mdi-delete\" ng-click=delete($index)></i></span></li></ul></div></div><audio id=alert src=https://dl.dropboxusercontent.com/u/2449512/roundhouse.wav preload=auto></audio>");}]);})(window);
+$templateCache.put("{widgetsPath}/timetracker/src/view.html","<div id=head><div class=circles><div class=progress-wrapper ng-controller=currentPause id=pause><div class=\"progress pause\" ng-show=\"run === false\">{{currentText}}</div><div round-progress max=max current=current color=white bgcolor=#262b34 radius=70 stroke=10 semi=false rounded=false clockwise=false responsive=false duration=2400 animation=easeInOutQuart ng-class={dimmedpause:run}></div></div><div class=progress-wrapper ng-controller=currentTask><div class=\"progress task\" ng-show=\"run === true\">{{currentText}}</div><div round-progress max=max current=current color=#00c0ff bgcolor=#262b34 radius=70 stroke=3 semi=false rounded=false clockwise=false responsive=false duration=2400 animation=easeInOutQuart ng-class={dimmedplay:!run}></div></div></div><div class=interaction ng-controller=controls><span class=btn ng-click=startpause()><i class=\"mdi mdi-pause\" ng-show=\"run === true\"></i><i class=\"mdi mdi-play\" ng-show=\"run === false\"></i></span> <span class=\"btn primary\" ng-click=addnote()><i class=\"mdi mdi-plus\"></i></span></div></div><div id=content ng-controller=tasks><div style=text-align:center ng-hide=\"tasks.length > 0\"><h2 style=\"margin:20px 0 0 0;\">Oh :(</h2><h3 style=margin:0;>You have no recorded tasks yet - that makes me sad</h3></div><input placeholder=Filter ng-show=\"tasks.length > 0\" type=text id=filter ng-model=taskfilter><ul><li class=list-animation ng-repeat=\"task in tasks | filter: taskfilter track by $index\"><span class=date>{{task.date}}</span> <b>{{task.note}}</b><span class=right><span class=time>{{task.ftime}}</span><span class=pause>{{task.fpause}}</span><i class=\"mdi mdi-delete\" ng-click=delete($index)></i></span></li></ul></div><audio id=alert src=https://dl.dropboxusercontent.com/u/2449512/roundhouse.wav preload=auto></audio>");}]);})(window);

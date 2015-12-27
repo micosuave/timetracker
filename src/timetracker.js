@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adf.widget.timetracker', ['adf.provider'])
+angular.module('adf.widget.timetracker', ['adf.provider', 'tasker'])
   .config(function(dashboardProvider){
     dashboardProvider
       .widget('timetracker', {
@@ -12,7 +12,7 @@ angular.module('adf.widget.timetracker', ['adf.provider'])
         }
       });
   });
-//localStorage.setItem('codepen-tasker',undefined);
+
 
 $('#content').slimScroll({
    position: 'right',
