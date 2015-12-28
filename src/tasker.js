@@ -1,31 +1,10 @@
-(function(window, undefined) {'use strict';
-
-
-angular.module('adf.widget.timetracker', ['adf.provider', 'tasker'])
-  .config(["dashboardProvider", function(dashboardProvider){
-    dashboardProvider
-      .widget('timetracker', {
-        title: 'Time Tracker',
-        description: 'track billable hours to projects',
-        templateUrl: '{widgetsPath}/timetracker/src/view.html',
-        frameless:true,
-        edit: {
-          templateUrl: '{widgetsPath}/timetracker/src/edit.html'
-        }
-      });
-  }]);
-
-
-
-angular.module("adf.widget.timetracker").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/timetracker/src/edit.html","<form role=form><div class=form-group><label for=sample>Sample</label> <input type=text class=form-control id=sample ng-model=config.sample placeholder=\"Enter sample\"></div></form>");
-$templateCache.put("{widgetsPath}/timetracker/src/view.html","<embed src=timetracker/angular-time-pausetracker/index.html style=width:100%;min-height:600px;>");}]);
-
+'use strict';
 
 angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
-  .run(["$rootScope", function ($rootScope) {
+  .run(function ($rootScope) {
         $rootScope.run = false;
         $rootScope.hasState = false;
-  }])
+  })
   .controller('tasks', ['$scope', 'taskService', function ($scope, taskService) {   
    $scope.tasks = taskService.getAll();
    
@@ -269,4 +248,4 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          PAUSE = val;
       }
    }
-}]);})(window);
+}]);

@@ -1,38 +1,6 @@
-(function(window, undefined) {'use strict';
+//localStorage.setItem('codepen-tasker',undefined);
 
-
-angular.module('adf.widget.timetracker', ['adf.provider', 'tasker'])
-  .config(["dashboardProvider", function(dashboardProvider){
-    dashboardProvider
-      .widget('timetracker', {
-        title: 'Time Tracker',
-        description: 'track billable hours to projects',
-        templateUrl: '{widgetsPath}/timetracker/src/view.html',
-        frameless:true,
-        edit: {
-          templateUrl: '{widgetsPath}/timetracker/src/edit.html'
-        }
-      });
-  }]);
-
-
-
-angular.module("adf.widget.timetracker").run(["$templateCache", function($templateCache) {$templateCache.put("{widgetsPath}/timetracker/src/edit.html","<form role=form><div class=form-group><label for=sample>Sample</label> <input type=text class=form-control id=sample ng-model=config.sample placeholder=\"Enter sample\"></div></form>");
-$templateCache.put("{widgetsPath}/timetracker/src/view.html","<embed src=timetracker/angular-time-pausetracker/index.html style=width:100%;min-height:600px;>");}]);
-
-
-angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
-  .run(["$rootScope", function ($rootScope) {
-        $rootScope.run = false;
-        $rootScope.hasState = false;
-  }])
-  .controller('tasks', ['$scope', 'taskService', function ($scope, taskService) {   
-   $scope.tasks = taskService.getAll();
-   
-   $scope.delete = function($index) {
-      taskService.remove($index);
-   };
-   $('#content').slimScroll({
+$('#content').slimScroll({
    position: 'right',
    height: '370px',
    railVisible: true,
@@ -46,9 +14,23 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
       var seconds = "0" + (time - minutes * 60);
       return minutes.substr(-2) + ":" + seconds.substr(-2);
    }
+  
+var app = angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate']);
+app.run(function($rootScope) {
+   $rootScope.run = false;
+   $rootScope.hasState = false;
+});
 
-  }])
-  .controller('controls', ['$scope', '$rootScope', 'timeService', 'taskService', function ($scope, $rootScope, timeService, taskService) {
+app.controller('tasks', ['$scope', 'taskService', function($scope, taskService) {   
+   $scope.tasks = taskService.getAll();
+   
+   $scope.delete = function($index) {
+      taskService.remove($index);
+   };
+   
+}]);
+
+app.controller('controls', ['$scope','$rootScope','timeService', 'taskService', function($scope, $rootScope, timeService, taskService) {
    $scope.startpause = function() {
       if ($rootScope.run === false) {
          $rootScope.run = true; 
@@ -57,21 +39,7 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          $rootScope.run = false; 
       }
    }
-   $('#content').slimScroll({
-   position: 'right',
-   height: '370px',
-   railVisible: true,
-   alwaysVisible: true,
-   color: '#00c0ff',
-   wheelStep: 7
-});
-
-  function splitTime(time) {
-      var minutes = "0" + Math.floor(time / 60);
-      var seconds = "0" + (time - minutes * 60);
-      return minutes.substr(-2) + ":" + seconds.substr(-2);
-   }
-
+   
    $scope.addnote = function() {
       $rootScope.run = false;
       $rootScope.hasState = false;
@@ -85,8 +53,9 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          $rootScope.hasState = true;
       }
    };   
-  }])
-  .controller('currentPause', ['$scope', '$rootScope', '$interval', 'timeService', function ($scope, $rootScope, $interval, timeService) {  
+}]);
+   
+app.controller('currentPause', ['$scope', '$rootScope' ,'$interval','timeService', function($scope, $rootScope, $interval, timeService) {  
           
    $scope.max = timeService.getConfig('pause');
    $scope.current = timeService.getConfig('pause');
@@ -96,21 +65,7 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
       $scope.current = timeService.getConfig('pause');
       $scope.currentText = splitTime($scope.current);
    });
-   $('#content').slimScroll({
-   position: 'right',
-   height: '370px',
-   railVisible: true,
-   alwaysVisible: true,
-   color: '#00c0ff',
-   wheelStep: 7
-});
-
-  function splitTime(time) {
-      var minutes = "0" + Math.floor(time / 60);
-      var seconds = "0" + (time - minutes * 60);
-      return minutes.substr(-2) + ":" + seconds.substr(-2);
-   }
-
+   
    $interval(function(){            
       if (!$scope.run && $scope.hasState) {                                      
          if ($scope.current <= 0 && $rootScope.hasState) {
@@ -123,8 +78,9 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          }
       }
    }, 1000);   
-  }])
-  .controller('currentTask', ['$scope', '$rootScope', '$interval', 'timeService', function ($scope, $rootScope, $interval, timeService) {  
+}]);
+
+app.controller('currentTask', ['$scope', '$rootScope','$interval', 'timeService', function($scope, $rootScope, $interval, timeService) {  
          
    $scope.max = timeService.getConfig('time');
    $scope.current = timeService.getConfig('time');
@@ -134,21 +90,7 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
       $scope.current = timeService.getConfig('time');
       $scope.currentText = splitTime($scope.current);
    });
-   $('#content').slimScroll({
-   position: 'right',
-   height: '370px',
-   railVisible: true,
-   alwaysVisible: true,
-   color: '#00c0ff',
-   wheelStep: 7
-});
-
-  function splitTime(time) {
-      var minutes = "0" + Math.floor(time / 60);
-      var seconds = "0" + (time - minutes * 60);
-      return minutes.substr(-2) + ":" + seconds.substr(-2);
-   }
-
+   
       $interval(function(){            
          if ($scope.run && $scope.hasState) {                        
             if ($scope.current <= 0) {
@@ -161,8 +103,10 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
             }
          }
       }, 1000);   
-  }])
-  .factory('taskService', ['timeService', function (timeService) {
+}]);
+
+
+app.factory('taskService', ['timeService', function(timeService) {
    var date = "";
    var tasks = []; 
    
@@ -170,11 +114,7 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
       var gd = new Date();   
       date += gd.getDay() + "/" + gd.getMonth() + "/" + gd.getFullYear();
    }
-    function splitTime(time) {
-      var minutes = "0" + Math.floor(time / 60);
-      var seconds = "0" + (time - minutes * 60);
-      return minutes.substr(-2) + ":" + seconds.substr(-2);
-   }
+   
    return {            
       add: function(note) {
          tasks.push({ 
@@ -214,19 +154,16 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          localStorage.setItem('codepen-tasker',JSON.stringify(tasks));
       }
    }   
-  }])
-  .factory('timeService', [function () {
+}]);
+
+app.factory('timeService', [function() {
    var CONFIG = {
          time: 2400,
          pause: 600
    },
    PAUSE = CONFIG.pause,
    TIME = CONFIG.time;
-    function splitTime(time) {
-      var minutes = "0" + Math.floor(time / 60);
-      var seconds = "0" + (time - minutes * 60);
-      return minutes.substr(-2) + ":" + seconds.substr(-2);
-   }
+   
    return {  
       
       reset: function() {
@@ -269,4 +206,4 @@ angular.module('tasker', ['angular-svg-round-progress', 'ngAnimate'])
          PAUSE = val;
       }
    }
-}]);})(window);
+}]);
