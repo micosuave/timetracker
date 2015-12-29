@@ -44,7 +44,7 @@ app.controller('controls', ['$scope','$rootScope','timeService', 'taskService', 
       $rootScope.run = false;
       $rootScope.hasState = false;
       
-      var note = prompt("What have you done ?");
+      var note = alertify.prompt("What have you done ?");
 
       if (note != null && note.trim() !== "")  {
          taskService.add(note);
@@ -112,7 +112,7 @@ app.factory('taskService', ['timeService', function(timeService) {
    
    if (date === "") {
       var gd = new Date();   
-      date += gd.getDay() + "/" + gd.getMonth() + "/" + gd.getFullYear();
+      date += gd.getFullYear() + "/" + gd.getMonth() + "/" + gd.getDay(); 
    }
    
    return {            
@@ -135,7 +135,7 @@ app.factory('taskService', ['timeService', function(timeService) {
       },
       
       getAll: function() {
-         if (localStorage.getItem('codepen-tasker') === null) {
+         if (localStorage.getItem('lexlab-tasker') === null) {
             this.setPersistence();
          }
          
@@ -147,11 +147,11 @@ app.factory('taskService', ['timeService', function(timeService) {
       },
       
       getPersistence: function() {
-         tasks = JSON.parse(localStorage.getItem('codepen-tasker'));
+         tasks = JSON.parse(localStorage.getItem('lexlab-tasker'));
       },
       
       setPersistence: function() {
-         localStorage.setItem('codepen-tasker',JSON.stringify(tasks));
+         localStorage.setItem('lexlab-tasker',JSON.stringify(tasks));
       }
    }   
 }]);

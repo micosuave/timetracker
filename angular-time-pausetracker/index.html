@@ -2,7 +2,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Angular Time/Pausetracker</title>
+    <title>ATTracker</title>
     
     
     
@@ -38,8 +38,8 @@
     </div>
     <div id="content" ng-controller="tasks">
        <div style="text-align:center" ng-hide="tasks.length > 0">
-          <h2 style="margin:20px 0 0 0;">Oh :(</h2>
-          <h3 style="margin:0;"> You have no recorded tasks yet - that makes me sad</h3>
+          <h2 style="margin:20px 0 0 0;"><img src="https://lexlab.io/llp_core/img/lll3.svg" /></h2>
+          <h3 style="margin:0;"> You have no recorded tasks yet</h3>
        </div>
        <input placeholder="Filter" ng-show="tasks.length > 0" type="text" id="filter" ng-model="taskfilter" />
        <ul>                  
