@@ -21,9 +21,16 @@
   ],
   "description": "track billable hours to projects",
   "dependencies": {
-    "angular-dashboard-framework": "0.8.0"
+    "angular-dashboard-framework": "~0.11.0"
   },
   "devDependencies": {
     "angular-local-storage": "0.1.5"
+  },
+  "resolutions": {
+    "angular-dashboard-framework": "~0.11.0",
+    "angular": ">=1.3.0",
+    "angular-bootstrap": "^0.14.3",
+    "bootstrap": "^3.3.6",
+    "Sortable": "^1.2.1"
   }
 }
